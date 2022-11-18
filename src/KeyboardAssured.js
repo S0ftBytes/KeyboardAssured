@@ -1,4 +1,4 @@
-import AssuredRequest from './AssuredRequest';
+const AssuredRequest = require('./AssuredRequest');
 
 class KeyboardAssured {
 
@@ -28,4 +28,4 @@ class KeyboardAssured {
     }
 }
 
-export default KeyboardAssured;
+module.exports = KeyboardAssured;

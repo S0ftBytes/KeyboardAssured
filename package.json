@@ -2,7 +2,7 @@
   "name": "keyboard-assured",
   "version": "1.0.0",
   "description": "Lightweight package designed for testing REST-APIs",
-  "main": "KeyboardAssured.js",
+  "main": "src/KeyboardAssured.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

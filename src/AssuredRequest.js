@@ -1,13 +1,7 @@
-import axios from 'axios';
+const axios = require('axios');
+const AssuredResponse = require('./AssuredResponse');
 
 class AssuredRequest {
-
-    constructor(keyboardAssured, route, requestHeaders, requestBody) {
-        this.keyboardAssured = keyboardAssured;
-        this.route = route;
-        this.requestHeaders = requestHeaders;
-        this.requestBody = requestBody;
-    }
 
     constructor(keyboardAssured, route) {
         this.keyboardAssured = keyboardAssured;
@@ -42,102 +36,40 @@ class AssuredRequest {
 
     getURL() { return this.keyboardAssured.getBaseURL() + this.route; }
 
+    hasResolved(){
+        return this.pendingResponse?.isFullfilled();
+    }
+
     async post() {
         this.pendingResponse = axios.post(this.getURL(), this.getBody(), this.getHeaders());
 
-        if(this.keyboardAssured.getShouldAwaitResponse()) await this.pendingResponse;
-        return this;
+        return new AssuredResponse(await this.pendingResponse);
     }
 
     async get() {
         this.pendingResponse = axios.get(this.getURL(), this.getHeaders());
 
-        if(this.keyboardAssured.getShouldAwaitResponse()) await this.pendingResponse;
-        return this;
+        return new AssuredResponse(await this.pendingResponse);
     } 
 
     async delete(){
         this.pendingResponse = axios.delete(this.getURL(), this.getHeaders());
 
-        if(this.keyboardAssured.getShouldAwaitResponse()) await this.pendingResponse;
-        return this;
+        return new AssuredResponse(await this.pendingResponse);
     }
 
     async put() {
         this.pendingResponse = axios.put(this.getURL(), this.getBody(), this.getHeaders());
 
-        if(this.keyboardAssured.getShouldAwaitResponse()) await this.pendingResponse;
-        return this;
+        return new AssuredResponse(await this.pendingResponse);
     }
 
     async patch() {
         this.pendingResponse = axios.patch(this.getURL(), this.getBody(), this.getHeaders());
 
-        if(this.keyboardAssured.getShouldAwaitResponse()) await this.pendingResponse;
-        return this;
+        return new AssuredResponse(await this.pendingResponse);
     }
 
-    getResponse() { return this.pendingResponse; }
-
-    async getResponseData() { 
-        if(this.pendingResponse === undefined) return;
-        if(this.pendingResponse?.isFullfilled()) return this.pendingResponse.data;
-        
-        return await this.pendingResponse.then((response) => {
-            return response.data;
-        })
-    }
-
-    async getStatusCode(){
-        if(this.pendingResponse === undefined) return;
-
-        const response = await this.getResponse();
-
-        return response.status;
-    }
-
-    async getResponseHeaders() {
-        if(this.pendingResponse === undefined) return;
-
-        const response = await this.getResponse();
-
-        return response.headers;
-    }
-
-    async expectCode(expectedCode) {
-        const code = await this.getStatusCode();
-
-        if(code !== expectedCode) throw new Error(`Expected status code ${expectedCode}, but got ${code}`);
-
-        return this;
-    }
-
-    async expectHeader(header, expectedValue) {
-        const headers = await this.getResponseHeaders();
-
-        if(headers[header] !== expectedValue) throw new Error(`Expected header ${header} to be ${expectedValue}, but got ${headers[header]}`);
-
-        return this;
-    }
-
-    async expectValue(expectedProp, expectedValue) {
-        const body = await this.getResponseData();
-
-        const assertedProp = body[expectedProp];
-        if(assertedProp !== expectedValue) throw new Error(`Expected ${expectedProp} to have the value ${expectedValue}, but got ${assertedProp}`);
-
-        return this;
-    }
-
-    async expectToIncludeProp(expectedProp) {
-        const body = await this.getResponseData();
-
-        if(body[expectedProp] === undefined) throw new Error(`Expected ${expectedProp} to be included in the response body, but it was not`);
-
-        return this;
-    }
-
-    
 }
 
-export default AssuredRequest;
+module.exports = AssuredRequest;
