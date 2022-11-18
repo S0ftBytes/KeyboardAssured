@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 class AssuredResponse {
     constructor(response){
         this.response = response;
@@ -22,7 +24,7 @@ class AssuredResponse {
     expectCode(expectedCode) {
         const code = this.getStatusCode();
 
-        if(code !== expectedCode) throw new Error(`Expected status code ${expectedCode}, but got ${code}`);
+        assert.equal(code, expectedCode, `Expected status code ${expectedCode}, but got ${code}`);
 
         return this;
     }
@@ -30,7 +32,7 @@ class AssuredResponse {
     expectHeader(header, expectedValue) {
         const headers = this.getResponseHeaders();
 
-        if(headers[header] !== expectedValue) throw new Error(`Expected header ${header} to be ${expectedValue}, but got ${headers[header]}`);
+        assert.equal(headers[header], expectedValue, `Expected header ${header} to be ${expectedValue}, but got ${headers[header]}`);
 
         return this;
     }
@@ -39,7 +41,7 @@ class AssuredResponse {
         const body = this.getResponseData();
 
         const assertedProp = body[expectedProp];
-        if(assertedProp !== expectedValue) throw new Error(`Expected ${expectedProp} to have the value ${expectedValue}, but got ${assertedProp}`);
+        assert.equal(assertedProp, expectedValue, `Expected ${expectedProp} to have the value ${expectedValue}, but got ${assertedProp}`);
 
         return this;
     }
@@ -47,7 +49,7 @@ class AssuredResponse {
     expectToIncludeProp(expectedProp) {
         const body = this.getResponseData();
 
-        if(body[expectedProp] === undefined) throw new Error(`Expected ${expectedProp} to be included in the response body, but it was not`);
+        assert.doesNotMatch(body[expectedProp], undefined, `Expected ${expectedProp} to be included in the response body, but it was not`)
 
         return this;
     }
@@ -56,7 +58,9 @@ class AssuredResponse {
         const body = this.getResponseData();
 
         const dataType = typeof body;
-        if(dataType !== expectedType) throw new Error(`Expected the response data to have the type of ${expectedType}, but got ${dataType}`);
+        assert.equal(dataType, expectedType, `Expected the response data to have the type of ${expectedType}, but got ${dataType}`);
+
+        return this;
     }
 }
 
