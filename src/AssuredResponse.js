@@ -3,6 +3,10 @@ class AssuredResponse {
         this.response = response;
     }
 
+    getResponseMessage(){
+        return this.response.statusText;
+    }
+
     getResponseData() { 
         return this.response?.data;
     }
@@ -46,6 +50,13 @@ class AssuredResponse {
         if(body[expectedProp] === undefined) throw new Error(`Expected ${expectedProp} to be included in the response body, but it was not`);
 
         return this;
+    }
+
+    expectDataType(expectedType) {
+        const body = this.getResponseData();
+
+        const dataType = typeof body;
+        if(dataType !== expectedType) throw new Error(`Expected the response data to have the type of ${expectedType}, but got ${dataType}`);
     }
 }
 
