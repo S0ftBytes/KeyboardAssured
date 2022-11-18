@@ -1,5 +1,6 @@
 import chai from 'chai';
 import axios from 'axios';
+import AssuredRequest from './AssuredRequest';
 
 class KeyboardAssured {
 
