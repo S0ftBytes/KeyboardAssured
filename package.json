@@ -15,8 +15,7 @@
     "api",
     "tests",
     "tests",
-    "api",
-    "chai"
+    "api"
   ],
   "author": "S0ftBytes",
   "license": "ISC",
