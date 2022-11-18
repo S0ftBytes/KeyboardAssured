@@ -1,8 +1,8 @@
 {
   "name": "keyboard-assured",
   "version": "1.0.0",
-  "description": "Lightweight package designed for testing REST-APIs, using the Chai assertion lib",
-  "main": "KeyboardAssured.js",
+  "description": "Lightweight package designed for testing REST-APIs",
+  "main": "src/KeyboardAssured.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,12 +15,12 @@
     "api",
     "tests",
     "tests",
-    "api",
-    "chai"
+    "api"
   ],
   "author": "S0ftBytes",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.3.7"
+    "assert": "^2.0.0",
+    "axios": "^1.1.3"
   }
 }
