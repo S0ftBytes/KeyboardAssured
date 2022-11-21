@@ -62,6 +62,16 @@ class AssuredResponse {
 
         return this;
     }
+
+    expectMessage(expectedMessage, strict = true) {
+        const message = this.getResponseMessage();
+
+        strict ? 
+            assert.equal(message, expectedMessage, `Expected the response message to be ${expectedMessage}, but got ${message}`) :
+            assert.equal(true, message.includes(expectedMessage), `Expected the response message to contain ${expectedMessage}, but it did not`)
+
+        return this;
+    }
 }
 
 module.exports = AssuredResponse;
