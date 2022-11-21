@@ -11,12 +11,6 @@ class KeyboardAssured {
         this.baseURL = baseURL;
     }
 
-    setShouldAwaitResponse(shouldAwait) {
-        this.shouldAwait = shouldAwait;
-    }
-
-    getShouldAwaitResponse() { return this.shouldAwait; }
-
     getBaseURL() { return this.baseURL; }
 
     createRequest(route) {
