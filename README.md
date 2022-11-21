@@ -25,7 +25,7 @@ describe('Example mocha test with KeyboardAssured', () => {
         .post()
         .then((response) => {
             response.expectCode(201);
-            response.getResponseMessage("Successfully added the car 'Audi, R8'!");
+            assert.equal(response.getResponseMessage(), "Successfully added the car 'Audi, R8'!");
         })
     })
 })
