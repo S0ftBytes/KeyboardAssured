@@ -2,30 +2,43 @@ const AssuredRequest = require('./AssuredRequest');
 
 class KeyboardAssured {
 
+    /**
+     * @param {String} baseURL - The base URL of the API
+     */
     constructor(baseURL) {
         this.baseURL = baseURL;
-        global.baseURL = baseURL;
     }
+
+    /**
+     * Sets the base URL of the API
+     * 
+     * @param {String} baseURL - New base URL
+     */
 
     setBaseURL(baseURL) {
         this.baseURL = baseURL;
     }
 
-    setShouldAwaitResponse(shouldAwait) {
-        this.shouldAwait = shouldAwait;
-    }
-
-    getShouldAwaitResponse() { return this.shouldAwait; }
+    /**
+     * Get the base URL of the API
+     * 
+     *  @returns {String} - The base URL of the API
+     */
 
     getBaseURL() { return this.baseURL; }
+
+
+    /**
+     * Create a new AssuredRequest instance
+     * 
+     * @param {String} route - The route of the request
+     * @returns {AssuredRequest} - The new AssuredRequest instance
+     */
 
     createRequest(route) {
         return new AssuredRequest(this, route);
     }
 
-    createRequest(route, requestHeaders, requestBody) {
-        return new AssuredRequest(this, route, requestHeaders, requestBody);
-    }
 }
 
 module.exports = KeyboardAssured;
